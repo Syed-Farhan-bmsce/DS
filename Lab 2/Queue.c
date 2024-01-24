@@ -1,82 +1,80 @@
 // write a program to simulate the working of the queue of integers using an array. Provide the following operations: Insert, delete, display. The program should print appropriate message for overflow and underflow condition.
 
-#include<stdio.h>
-#include<string.h>
-#define MAX 50
+#include <stdio.h>
+#include <stdlib.h>
 
-int queue_array[MAX];
-int rear = -1;
-int front = -1;
+#define SIZE 5
 
-display()
-{
-    int i;
-    if (front == -1)
-    {
-        printf("Queue is Empty \n");
-    }
-    else
-    {
-        printf("Queue is: \n");
-        for(i=front; i<=rear; i++)
-        {
-            printf("%d", queue_array[i]);
-            printf("\n");
-        }
-    }
-}
+int queue[SIZE];
+int front = -1, rear = -1;
 
-void main()
-{
+void enqueue();
+void dequeue();
+void display();
+
+int main() {
     int choice;
-    while(1)
-    {
-        printf("\n 1.Insert \n 2.Delete \n 3.Display \n 4.Exit \n");
-        printf("Enter Your Choice: ");
+    while(1) {
+        printf("\nEnter 1: to enqueue \nEnter 2: to dequeue \nEnter 3: to diaplay \nEnter 4: to exit\n");
+        printf("Enter your choice:");
         scanf("%d", &choice);
-        switch(choice)
+
+        switch (choice)
         {
-            case 1: insert();
+        case 1:
+            enqueue();
             break;
-
-            case 2: delete();
+        case 2:
+            dequeue();
             break;
-
-            case 3: display();
+        case 3:
+            display();
             break;
-
-            case 4: exit(1);
+        case 4: 
+            exit(0);       
+        default:
+            printf("invalid number \n");
             break;
-
-            default: printf("Invalid Choice \n");
         }
     }
 }
 
-insert()
-{
-    int add_item;
-    if(rear == MAX-1)
-    {
-        front =0;
-        printf("Insert the Element in Queue: \n");
-        scanf("%d", &add_item);
-        rear = rear +1;
-        queue_array[rear]=add_item;
+void enqueue() {
+    int num;
+    if(rear == SIZE-1) {
+        printf("overflow");
+    } else {
+        if(front == -1) {
+            front = 0;
+        }
+        printf("Enter the number:");
+        scanf("%d", &num);
+        rear++;
+        queue[rear] = num;
+        printf("insertion successful");
     }
 }
 
-delete()
-{
-    if(front == -1 || front> rear)
-    {
-        printf("Queue Underflow \n");
-        return;
+void dequeue() {
+    if(front == -1 || front > rear) {
+        printf("underflow \n");
+    } else {
+        printf("dequeued element is: %d \n", queue[front]);
+        front++;
+        if(front > rear) {
+            front = -1;
+            rear = -1;
+        }
     }
-    else
-    {
-        printf("Deleted Element is: %d\n", queue_array[front]);
-        front = front +1;
+}
+
+void display() {
+    if(front == -1 || front > rear) {
+        printf("queue is empty");
+    } else {
+        for(int i= front; i <= rear; i++) {
+            printf("Element of queue: %d ", queue[i]);
+        }
     }
 }
 
