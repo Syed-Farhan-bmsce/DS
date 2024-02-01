@@ -5,7 +5,7 @@
 #include <stdio.h>
 #define SIZE 5
 
-void push(int);
+void push(int value);
 void pop();
 void display();
 int stack[SIZE], top = -1;
